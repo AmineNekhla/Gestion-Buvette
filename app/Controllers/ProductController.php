@@ -6,16 +6,10 @@ use App\Models\ProductModel;
 
 class ProductController extends BaseController
 {
-    protected $productModel;
-
-    public function __construct()
-    {
-        $this->productModel = new ProductModel();
-    }
-
     public function index()
     {
-        $data['products'] = $this->productModel->findAll();
+        $model = new ProductModel();
+        $data['products'] = $model->findAll();
         return view('products/index', $data);
     }
 
@@ -23,38 +17,90 @@ class ProductController extends BaseController
     {
         return view('products/create');
     }
-
     public function store()
     {
-        $this->productModel->save([
+        $model = new ProductModel();
+    
+        // Validate form input
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name' => 'required|min_length[3]',
+            'price' => 'required|decimal',
+            'image' => 'uploaded[image]|max_size[image,2048]|is_image[image]'
+        ]);
+    
+        if (!$this->validate($validation->getRules())) {
+            return redirect()->to('products/create')->withInput()->with('errors', $this->validator->getErrors());
+        }
+    
+        // Handle file upload
+        if ($this->request->getFile('image')->isValid()) {
+            $image = $this->request->getFile('image');
+            $imageName = $image->getRandomName(); // Generate a random name for the image
+            $image->move(FCPATH . 'uploads', $imageName); // Move the file to the uploads directory within public
+        }
+    
+        $data = [
             'name' => $this->request->getPost('name'),
             'price' => $this->request->getPost('price'),
-            'description' => $this->request->getPost('description'),
-        ]);
-
-        return redirect()->to('/products')->with('success', 'Product added successfully.');
+            'image' => $imageName ?? null, // Save the image name to the database
+        ];
+    
+        $model->save($data);
+        return redirect()->to('/products');
     }
-
+    
     public function edit($id)
     {
-        $data['product'] = $this->productModel->find($id);
+        $model = new ProductModel();
+        $data['product'] = $model->find($id);
         return view('products/edit', $data);
     }
 
     public function update($id)
     {
-        $this->productModel->update($id, [
-            'name' => $this->request->getPost('name'),
-            'price' => $this->request->getPost('price'),
-            'description' => $this->request->getPost('description'),
+        $model = new ProductModel();
+
+        // Validate form input
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name' => 'required|min_length[3]',
+            'price' => 'required|decimal',
+            'image' => 'max_size[image,2048]|is_image[image]'
         ]);
 
-        return redirect()->to('/products')->with('success', 'Product updated successfully.');
+        if (!$this->validate($validation->getRules())) {
+            return redirect()->to('products/edit/' . $id)->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $data = [
+            'name' => $this->request->getPost('name'),
+            'price' => $this->request->getPost('price'),
+        ];
+
+        // Handle file upload if a new image is uploaded
+        if ($this->request->getFile('image')->isValid()) {
+            $image = $this->request->getFile('image');
+            $imageName = $image->getRandomName();
+            $image->move(WRITEPATH . '../uploads', $imageName);
+            $data['image'] = $imageName; // Update the image name in the database
+        }
+
+        $model->update($id, $data);
+        return redirect()->to('/products');
     }
 
     public function delete($id)
     {
-        $this->productModel->delete($id);
-        return redirect()->to('/products')->with('success', 'Product deleted successfully.');
+        
+        $productModel = new ProductModel();
+        
+        // Attempt to delete the product
+        if ($productModel->delete($id)) {
+            return redirect()->to('/products')->with('success', 'Product deleted successfully.');
+        } else {
+            return redirect()->to('/products')->with('errors', 'Failed to delete product.');
+        }
     }
+    
 }

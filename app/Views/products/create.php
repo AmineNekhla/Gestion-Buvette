@@ -12,24 +12,21 @@
         </ul>
     </div>
 <?php endif; ?>
-
-<form action="/products/store" method="post">
+<form action="/products/store" method="post" enctype="multipart/form-data">
+    <?= csrf_field(); ?>
     <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" class="form-control" value="<?= old('name') ?>" required>
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
     </div>
-
     <div class="form-group">
         <label for="price">Price</label>
-        <input type="text" name="price" id="price" class="form-control" value="<?= old('price') ?>" required>
+        <input type="text" class="form-control" id="price" name="price" required>
     </div>
-
     <div class="form-group">
-        <label for="description">Description</label>
-        <textarea name="description" id="description" class="form-control"><?= old('description') ?></textarea>
+        <label for="image">Upload Image</label>
+        <input type="file" class="form-control" id="image" name="image" required>
     </div>
-
-    <button type="submit" class="btn btn-primary">Add Product</button>
-    <a href="/products" class="btn btn-secondary">Back</a>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
 <?= $this->endSection() ?>

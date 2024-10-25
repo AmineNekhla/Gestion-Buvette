@@ -17,7 +17,7 @@
             <tr>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Description</th>
+                <th>Image</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,12 +26,19 @@
                 <tr>
                     <td><?= esc($product['name']) ?></td>
                     <td><?= esc($product['price']) ?></td>
-                    <td><?= esc($product['description']) ?></td>
+                    <td>
+                        <?php if (!empty($product['image'])): ?>
+                            <img src="<?= base_url('uploads/' . esc($product['image'])) ?>" alt="Product Image" width="100">
+                        <?php else: ?>
+                            No image
+                        <?php endif; ?>
+                    </td>
                     <td>
                         <a href="/products/edit/<?= esc($product['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
                         <form action="/products/delete/<?= esc($product['id']) ?>" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                        </form>
+    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+</form>
+
                     </td>
                 </tr>
             <?php endforeach; ?>

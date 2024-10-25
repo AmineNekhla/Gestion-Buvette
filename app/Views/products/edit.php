@@ -12,25 +12,21 @@
         </ul>
     </div>
 <?php endif; ?>
-
-<form action="/products/update/<?= esc($product['id']) ?>" method="post">
+<form action="/products/update/<?= esc($product['id']) ?>" method="post" enctype="multipart/form-data">
+    <?= csrf_field(); ?>
     <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" class="form-control" value="<?= esc($product['name']) ?>" required>
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="<?= esc($product['name']) ?>" required>
     </div>
-
     <div class="form-group">
         <label for="price">Price</label>
-        <input type="text" name="price" id="price" class="form-control" value="<?= esc($product['price']) ?>" required>
+        <input type="text" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>" required>
     </div>
-
     <div class="form-group">
-        <label for="description">Description</label>
-        <textarea name="description" id="description" class="form-control" required><?= esc($product['description']) ?></textarea>
+        <label for="image">Upload New Image (Optional)</label>
+        <input type="file" class="form-control" id="image" name="image">
     </div>
-
-    <button type="submit" class="btn btn-primary">Update Product</button>
-    <a href="/products" class="btn btn-secondary">Back</a>
+    <button type="submit" class="btn btn-primary">Update</button>
 </form>
+
 <?= $this->endSection() ?>
-                
