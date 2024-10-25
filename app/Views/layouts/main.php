@@ -11,11 +11,18 @@
         <a class="navbar-brand" href="/">My App</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
+            <?php if (session()->get('isLoggedIn')): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/products">Products</a>
                 </li>
+                <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
+        <li class="nav-item">
+            <a class="nav-link" href="/products/create">Add Product</a>
+        </li>
+    <?php endif; ?>
+                <?php endif; ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products/create">Add Product</a>
+                    <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
