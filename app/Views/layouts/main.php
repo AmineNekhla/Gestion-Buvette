@@ -8,16 +8,25 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">My App</a>
+        <a class="navbar-brand" href="#">Buvette Ibn Zohr</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
             <?php if (session()->get('isLoggedIn')): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/products">Products</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
                 <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
         <li class="nav-item">
             <a class="nav-link" href="/products/create">Add Product</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Manage order</a>
         </li>
     <?php endif; ?>
                 <?php endif; ?>
