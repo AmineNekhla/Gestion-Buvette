@@ -6,11 +6,18 @@ use App\Models\ProductModel;
 
 class ProductController extends BaseController
 {
-    public function index(){
-        $model = new ProductModel();
-        $data['products'] = $model->findAll();
-        return view('products/index', $data);
-    }
+    public function index()
+{
+    $productModel = new \App\Models\ProductModel();
+    $products = $productModel->findAll();
+
+    // Explicitly pass itemCount to the view
+    return view('products/index', [
+        'products' => $products,
+        'itemCount' => $this->viewData['itemCount'] ?? 0,
+    ]);
+}
+
 
     public function create(){
         return view('products/create');

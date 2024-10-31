@@ -19,17 +19,19 @@
                     <a class="nav-link" href="#">Order</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/cart">Cart</a>
+                <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
+
+
                 </li>
                 <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
-        <li class="nav-item">
-            <a class="nav-link" href="/products/create">Add Product</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Manage order</a>
-        </li>
-    <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products/create">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Manage order</a>
+                    </li>
                 <?php endif; ?>
+            <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>

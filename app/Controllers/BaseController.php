@@ -3,56 +3,55 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Models\CartModel;
 
-/**
- * Class BaseController
- *
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- * Extend this class in any new controllers:
- *     class Home extends BaseController
- *
- * For security be sure to declare any new methods as protected or private.
- */
 abstract class BaseController extends Controller
 {
-    /**
-     * Instance of the main Request object.
-     *
-     * @var CLIRequest|IncomingRequest
-     */
     protected $request;
-
-    /**
-     * An array of helpers to be loaded automatically upon
-     * class instantiation. These helpers will be available
-     * to all other controllers that extend BaseController.
-     *
-     * @var list<string>
-     */
     protected $helpers = [];
+    protected $cartModel;
+    protected $viewData = []; // Initialize viewData to hold shared data
 
-    /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
-     */
-    // protected $session;
-
-    /**
-     * @return void
-     */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
+        // Preload the cart model
+        $this->cartModel = new CartModel();
 
-        // E.g.: $this->session = \Config\Services::session();
+        // Set cart item count as a shared variable
+        $this->setSharedVariables();
+    }
+
+    protected function setSharedVariables()
+    {
+        if (session()->get('isLoggedIn')) {
+            $clientId = session()->get('id');
+    
+            // Get all cart items for the client
+            $cartItems = $this->cartModel->where('client_id', $clientId)->findAll();
+            $itemCount = 0;
+    
+            // Sum the quantities for all items
+            foreach ($cartItems as $item) {
+                $itemCount += $item['quantity'];
+            }
+    
+            $this->viewData['itemCount'] = $itemCount; // Set item count
+        } else {
+            $this->viewData['itemCount'] = 0; // Default to 0 if not logged in
+        }
+    }
+    
+
+    protected function render($view, $data = [])
+    {
+        // Merge the shared data with the view-specific data
+        $data = array_merge($this->viewData, $data);
+        return view($view, $data);
     }
 }

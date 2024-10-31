@@ -1,39 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buvette Menu</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center">Buvette Menu</h1>
-        <div class="row">
-            <?php if (!empty($products)): ?>
-                <?php foreach ($products as $product): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="<?php echo base_url('uploads/' . $product['image']); ?>" alt="<?php echo $product['name']; ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo esc($product['name']); ?></h5>
-                                <p class="card-text">Price: $<?php echo esc($product['price']); ?></p>
-                                <p class="card-text"><?php echo esc($product['description']); ?></p>
-                            </div>
-                        </div>
+<?= $this->extend('layouts/main') ?>
+
+<?= $this->section('content') ?>
+<h1 class="mb-4">Welcome ! </h1>
+
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success">
+        <?= session()->getFlashdata('success') ?>
+    </div>
+<?php endif; ?>
+<?php if (session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('error') ?>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->get('isLoggedIn')): ?>
+    <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
+        <a href="/products/create" class="btn btn-dark mb-3">Add New Product</a>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if (!empty($products) && is_array($products)): ?>
+<div class="container mt-5">
+    <div class="row">
+        <?php foreach ($products as $product): ?>
+            <div class="col-md-4 mb-4"> 
+                <div class="card h-100">
+                    <?php if (!empty($product['image'])): ?>
+                        <img src="<?= base_url('uploads/' . $product['image']) ?>" class="card-img-top" alt="<?= esc($product['name']) ?>" style="height: 200px; object-fit: cover;">
+                    <?php endif; ?>
+
+                    <div class="card-body">
+                        <h5 class="card-title"><?= esc($product['name']) ?></h5>
+                        <p class="card-text">Price: <?= esc($product['price']) ?> MAD</p>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="col-md-12">
-                    <div class="alert alert-warning text-center">
-                        No products available.
+                    
+                    <div class="card-footer text-center">
+                        <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
+                            <a href="<?= site_url('products/edit/' . $product['id']) ?>" class="btn btn-light btn-sm shadow">Edit</a>
+                            <a href="<?= site_url('products/delete/' . $product['id']) ?>" class="btn btn-dark btn-sm shadow" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?');">Delete</a>
+                        <?php endif; ?>
+                        <a href="<?= site_url('cart/add/' . $product['id']) ?>" class="btn btn-light btn-sm shadow">Add to cart</a>
                     </div>
                 </div>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endforeach; ?>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+
+<?php else: ?>
+    <p>No products found.</p>
+<?php endif; ?>
+
+<?= $this->endSection() ?>

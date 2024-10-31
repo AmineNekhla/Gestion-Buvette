@@ -20,6 +20,5 @@ $routes->get('/login', 'AuthController::login');
 $routes->post('/loginUser', 'AuthController::loginUser');
 $routes->get('/logout', 'AuthController::logout');
 
-
 $routes->get('cart/add/(:num)', 'CartController::add/$1');
 $routes->get('cart', 'CartController::index');

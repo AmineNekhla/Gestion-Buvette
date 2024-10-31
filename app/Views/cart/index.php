@@ -22,12 +22,15 @@
                         <?php endif; ?>
                     </td>
                     <td><?= esc($product['name']) ?></td>
-                    <td><?= esc($product['price']) ?> MAD</td>
+                    <td><?= esc($product['price']) ?> MAD</td> <!-- Price reflects cumulative amount -->
                     <td><?= esc($product['quantity']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- Display total price here -->
+    <h2>Total: <?= esc($totalPrice) ?> MAD</h2>
 <?php else: ?>
     <p>Votre panier est vide.</p>
 <?php endif; ?>
