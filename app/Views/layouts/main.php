@@ -16,7 +16,7 @@
                     <a class="nav-link" href="/products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Order</a>
+                    <a class="nav-link" href="/cart/order">Order</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>

@@ -1,7 +1,19 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
-<h1>Mon Panier</h1>
+<h1>Passer une Commande</h1>
+
+<?php if (session()->getFlashdata('success_message')): ?>
+    <div class="alert alert-success">
+        <?= session()->getFlashdata('success_message') ?>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->getFlashdata('error_message')): ?>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('error_message') ?>
+    </div>
+<?php endif; ?>
 
 <?php if (!empty($products) && is_array($products)): ?>
     <table class="table">
@@ -31,15 +43,15 @@
 
     <h2>Total: <?= esc($totalPrice) ?> MAD</h2>
 
-    <!-- Ajouter ce bloc après le total -->
-<?php if (!empty($products) && is_array($products)): ?>
-    <a href="cart/order" class="btn btn-primary">Commander</a>
-<?php endif; ?>
-
-
-
+    <form action="/order" method="post">
+        <div class="form-group">
+            <label for="delivery_time">Choisissez l'heure de livraison :</label>
+            <input type="datetime-local" name="delivery_time" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Valider la commande</button>
+    </form>
 <?php else: ?>
-    <p>Votre panier est vide.</p>
+    <p>Aucun produit dans le panier pour passer une commande.</p>
 <?php endif; ?>
 
 <?= $this->endSection() ?>

@@ -6,6 +6,13 @@ use App\Models\ProductModel;
 
 class ProductController extends BaseController
 {
+
+
+    public function home(){
+        return view('products/home');
+    }
+
+
     public function index()
 {
     $productModel = new \App\Models\ProductModel();

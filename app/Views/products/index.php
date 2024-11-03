@@ -34,6 +34,8 @@
                             <?php if (session()->get('role') == 1): ?>
                                 <a href="/products/edit/<?= $product['id'] ?>" class="btn btn-warning">Edit</a>
                                 <a href="products/delete/<?= $product['id'] ?>" class="btn btn-warning">Delete</a>
+                                <a href="/cart/add/<?= $product['id'] ?>" class="btn btn-success">Add to Cart</a>
+
                             <?php else: ?>
                                 <a href="/cart/add/<?= $product['id'] ?>" class="btn btn-success">Add to Cart</a>
                             <?php endif; ?>
