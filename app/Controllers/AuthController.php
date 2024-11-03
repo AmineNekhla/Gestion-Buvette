@@ -55,41 +55,30 @@ class AuthController extends Controller
     }
 
 
-
-
-
-
-
-
 //function dyl gestion d login m3a database
-    public function loginUser(){
-        $model = new UserModel();
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+public function loginUser(){
+    $model = new UserModel();
+    $email = $this->request->getPost('email');
+    $password = $this->request->getPost('password');
 
-        $user = $model->where('email', $email)->first();
+    $user = $model->where('email', $email)->first();
 
-        if ($user && password_verify($password, $user['password'])) {
+    if ($user && password_verify($password, $user['password'])) {
             session()->set([
                 'id' => $user['id'],
                 'username' => $user['username'],
                 'email' => $user['email'],
+                'role' => $user['role'],
                 'isLoggedIn' => true
             ]);
-
+        
+           
             return redirect()->to('/products');
         }
+        
 
-        return redirect()->back()->with('error', 'Identifiants invalides.');
-    }
-
-
-
-
-
-
-
-
+    return redirect()->back()->with('error', 'Identifiants invalides.');
+}
 
 //function dyl logout
     public function logout(){

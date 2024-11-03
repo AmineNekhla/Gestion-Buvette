@@ -23,14 +23,15 @@
 
 
                 </li>
-                <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/create">Add Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Manage order</a>
-                    </li>
-                <?php endif; ?>
+               <?php if (session()->get('role') == 1): ?>
+    <li class="nav-item">
+        <a class="nav-link" href="/products/create">Add Product</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Manage Order</a>
+    </li>
+<?php endif; ?>
+
             <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
