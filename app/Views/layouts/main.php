@@ -23,10 +23,14 @@
 
 
                 </li>
+                <li class="nav-item">
+        <a class="nav-link" href="/comments">Comments</a> <!-- Add this line -->
+    </li>
                <?php if (session()->get('role') == 1): ?>
     <li class="nav-item">
         <a class="nav-link" href="/products/create">Add Product</a>
     </li>
+    
     <li class="nav-item">
         <a class="nav-link" href="#">Manage Order</a>
     </li>
