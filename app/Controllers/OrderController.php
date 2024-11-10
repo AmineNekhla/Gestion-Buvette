@@ -3,58 +3,47 @@
 namespace App\Controllers;
 
 use App\Models\OrderModel;
+use App\Models\UserModel;
+use App\Models\ProductModel;
 
 class OrderController extends BaseController
 {
-    public function order(){
-        $session = session();
+    public function manageOrders()
+    {
         $orderModel = new OrderModel();
-
-        if ($this->request->getMethod() === 'post') {
-            $clientName = $session->get('username'); 
-
-            $products = $session->get('cart'); 
-            $totalPrice = $this->calculateTotalPrice($products); 
-
-            $deliveryTime = $this->request->getPost('delivery_time');
-
-            if ($products && $clientName) {
-                $productDetails = json_encode($products);
-
-                $data = [
-                    'client_name' => $clientName,
-                    'products' => $productDetails,
-                    'total_price' => $totalPrice,
-                    'delivery_time' => $deliveryTime
-                ];
-
-                if ($orderModel->insert($data)) {
-                    $session->setFlashdata('success_message', 'Commande envoyée avec succès.');
-                    return redirect()->to('/cart/order');
-                } else {
-                    $session->setFlashdata('error_message', 'Une erreur est survenue lors de l\'envoi de la commande.');
-                    return redirect()->to('/cart/order');
+        $userModel = new UserModel();
+        $productModel = new ProductModel();
+    
+        $orders = $orderModel->findAll();
+    
+        foreach ($orders as &$order) {
+            $user = $userModel->find($order['user_id']);
+            $order['username'] = $user['username'] ?? 'Inconnu';
+    
+            $productIds = json_decode($order['product_ids'], true);
+            $order['products'] = [];
+    
+            log_message('debug', 'Product IDs for order ' . $order['id'] . ': ' . print_r($productIds, true));
+    
+            if (is_array($productIds)) {
+                foreach ($productIds as $productId) {
+                    $product = $productModel->find($productId);
+    
+                    log_message('debug', 'Product found: ' . print_r($product, true));
+    
+                    if ($product) {
+                        $order['products'][] = $product['name'];
+                    } else {
+                        $order['products'][] = 'Produit introuvable';
+                    }
                 }
             } else {
-                $session->setFlashdata('error_message', 'Aucun produit ou utilisateur non authentifié.');
-                return redirect()->to('/cart/order');
+                $order['products'][] = 'Aucun produit';
             }
         }
-
-        $data['products'] = $session->get('cart'); 
-        $data['totalPrice'] = $this->calculateTotalPrice($data['products']); 
-
-        return view('cart/order', $data);
+    
+        return view('orders/manage', ['orders' => $orders]);
     }
+    
 
-    private function calculateTotalPrice($products)
-    {
-        $total = 0;
-        if (!empty($products)) {
-            foreach ($products as $product) {
-                $total += $product['price'] * $product['quantity'];
-            }
-        }
-        return $total;
-    }
 }

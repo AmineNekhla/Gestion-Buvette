@@ -7,42 +7,41 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Buvette Ibn Zohr</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/home">Buvette Ibn Zohr</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
             <?php if (session()->get('isLoggedIn')): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/products">Products</a>
                 </li>
+               
                 <li class="nav-item">
-                    <a class="nav-link" href="/cart/order">Order</a>
+                    <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
-
-
+                    <a class="nav-link" href="/comments">Comments</a>
                 </li>
-                <li class="nav-item">
-        <a class="nav-link" href="/comments">Comments</a> <!-- Add this line -->
-    </li>
-               <?php if (session()->get('role') == 1): ?>
-    <li class="nav-item">
-        <a class="nav-link" href="/products/create">Add Product</a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link" href="#">Manage Order</a>
-    </li>
-<?php endif; ?>
-
-            <?php endif; ?>
+                <?php if (session()->get('role') == 1): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products/create">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="/manage-orders">Manage Order</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
-            </ul>
-        </div>
-    </nav>
+            <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
+
 
     <div class="container mt-4">
         <?= $this->renderSection('content') ?>

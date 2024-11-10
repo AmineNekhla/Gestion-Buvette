@@ -27,6 +27,7 @@ $routes->get('comments', 'CommentController::index');
 $routes->post('comments/store', 'CommentController::store');
 
 
-$routes->get('cart/order', 'CartController::order');
-$routes->get('cart/order', 'OrderController::order');
-$routes->post('order', 'OrderController::order');
+$routes->get('cart/validate', 'CartController::validateOrder');
+
+$routes->get('/manage-orders', 'OrderController::manageOrders');
+

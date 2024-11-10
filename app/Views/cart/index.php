@@ -31,11 +31,8 @@
 
     <h2>Total: <?= esc($totalPrice) ?> MAD</h2>
 
-    <!-- Ajouter ce bloc après le total -->
-<?php if (!empty($products) && is_array($products)): ?>
-    <a href="cart/order" class="btn btn-primary">Commander</a>
-<?php endif; ?>
 
+    <a href="<?= base_url('cart/validate') ?>" class="btn btn-success">Valider commande</a>
 
 
 <?php else: ?>

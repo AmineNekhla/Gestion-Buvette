@@ -15,7 +15,7 @@
         .hero-section {
             /* background-color: #f9f9f9; */
             background-color: white;
-            padding: 100px 50px;
+            padding: 50px 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -43,10 +43,12 @@
             background-color: #5a9a60;
         }
         .hero-img {
-            max-width: 600px;
+
+            max-width: 700px;
             width: 100%;
             margin-bottom: 30px;
             background-color: #f9f9f9;
+            margin-top: -4%;
 
         }
         .info-section {
@@ -64,7 +66,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Buvette Ibn Zohr</a>
+        <a class="navbar-brand" href="/home">Buvette Ibn Zohr</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
             <?php if (session()->get('isLoggedIn')): ?>
@@ -80,7 +82,7 @@
 
                 </li>
                 <li class="nav-item">
-        <a class="nav-link" href="/comments">Comments</a> <!-- Add this line -->
+        <a class="nav-link" href="/comments">Comments</a>
     </li>
                <?php if (session()->get('role') == 1): ?>
     <li class="nav-item">
@@ -105,7 +107,7 @@
         <img src="https://img.freepik.com/free-vector/people-sitting-cafe-flat-design_23-2148234523.jpg?t=st=1730642920~exp=1730646520~hmac=6023b83aa4ab1cc1272cc7dba217e5c6396c299536c2eecc024e92799b0b15bb&w=740" alt="Teamwork Illustration" class="hero-img">
 
         <h1 class="hero-title">Take Your Career to the Next Level with Buvette</h1>
-        <button class="hero-btn">order</button>
+        <a  href="/products"  class="hero-btn">order</a>
     </div>
     <div class="info-section">
         <h2 class="info-title">Why Buvette for Professionals & Job Seekers</h2>
