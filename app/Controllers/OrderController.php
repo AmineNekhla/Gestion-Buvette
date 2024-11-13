@@ -46,4 +46,53 @@ class OrderController extends BaseController
     }
     
 
+
+    public function validateO($orderId)
+    {
+        $orderModel = new OrderModel();
+        $userModel = new UserModel();
+        $productModel = new ProductModel();
+    
+        $order = $orderModel->find($orderId);
+    
+        if (!$order) {
+            return redirect()->to('/orders/manage')->with('error', 'Commande introuvable.');
+        }
+    
+        $user = $userModel->find($order['user_id']);
+        
+        // Récupérer les IDs des produits et obtenir leurs noms
+        $productIds = explode(',', $order['product_ids']);
+        $products = [];
+        
+        foreach ($productIds as $productId) {
+            $product = $productModel->find($productId);
+            if ($product) {
+                $products[] = $product['name'];
+            }
+        }
+        
+        return view('orders/validate_order', [
+            'order' => $order,
+            'user' => $user,
+            'products' => $products, // Liste des noms des produits
+        ]);
+    }
+    
+
+public function confirmValidation()
+{
+    $orderModel = new OrderModel();
+
+    // Récupérer les données du formulaire
+    $orderId = $this->request->getPost('order_id');
+    $description = $this->request->getPost('description');
+
+    // Mettre à jour la commande avec la description
+    $orderModel->update($orderId, ['description' => $description]);
+
+    return redirect()->to('/orders/manage')->with('success', 'La commande a été validée avec succès.');
+}
+
+
 }

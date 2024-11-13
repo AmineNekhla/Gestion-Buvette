@@ -11,6 +11,7 @@
                 <th>Nom</th>
                 <th>Prix</th>
                 <th>Quantité</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,10 @@
                     <td><?= esc($product['name']) ?></td>
                     <td><?= esc($product['price']) ?> MAD</td>
                     <td><?= esc($product['quantity']) ?></td>
+                    <td>
+                        <!-- Bouton de suppression -->
+                        <a href="<?= base_url('cart/remove/' . $product['id']) ?>" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce produit du panier ?');">Supprimer</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

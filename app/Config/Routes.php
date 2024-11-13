@@ -30,4 +30,7 @@ $routes->post('comments/store', 'CommentController::store');
 $routes->get('cart/validate', 'CartController::validateOrder');
 
 $routes->get('/manage-orders', 'OrderController::manageOrders');
+$routes->get('cart/remove/(:num)', 'CartController::remove/$1');
+$routes->get('order/validateO/(:num)', 'OrderController::validateO/$1');
+$routes->post('order/confirm_validation', 'OrderController::confirmValidation');
 

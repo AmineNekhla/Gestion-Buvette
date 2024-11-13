@@ -12,6 +12,7 @@
                 <th>Produits</th>
                 <th>Prix total</th>
                 <th>Date de la commande</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,10 @@
                     </td>
                     <td><?= esc($order['total_price']) ?> MAD</td>
                     <td><?= esc($order['order_date']) ?></td>
+                    <td>
+    <a href="<?= base_url('order/validateO/' . $order['id']) ?>" class="btn btn-primary">Valider</a>
+</td>
+
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -105,42 +105,67 @@ class CartController extends BaseController
     }
 
     public function validateorder()
-    {
-        $clientId = session()->get('id');
-        if (!$clientId) {
-            return redirect()->to('/login')->with('error', 'Vous devez être connecté pour valider une commande.');
-        }
+{
+    $clientId = session()->get('id');
+    if (!$clientId) {
+        return redirect()->to('/login')->with('error', 'Vous devez être connecté pour valider une commande.');
+    }
 
-        $cartModel = new CartModel();
-        $productModel = new ProductModel();
-        $orderModel = new OrderModel();
+    $cartModel = new CartModel();
+    $productModel = new ProductModel();
+    $orderModel = new OrderModel();
 
-        $cartItems = $cartModel->where('client_id', $clientId)->findAll();
-        if (!$cartItems) {
-            return redirect()->to('/cart')->with('error', 'Votre panier est vide.');
-        }
+    $cartItems = $cartModel->where('client_id', $clientId)->findAll();
+    if (!$cartItems) {
+        return redirect()->to('/cart')->with('error', 'Votre panier est vide.');
+    }
 
-        $totalPrice = 0;
-        $productIds = [];
-        foreach ($cartItems as $item) {
-            $product = $productModel->find($item['product_id']);
-            if ($product) {
-                $totalPrice += $product['price'] * $item['quantity'];
+    $totalPrice = 0;
+    $productIds = [];
+    foreach ($cartItems as $item) {
+        $product = $productModel->find($item['product_id']);
+        if ($product) {
+            $totalPrice += $product['price'] * $item['quantity'];
+
+            // Ajouter l'ID du produit autant de fois que sa quantité
+            for ($i = 0; $i < $item['quantity']; $i++) {
                 $productIds[] = $item['product_id'];
             }
         }
-
-        $orderData = [
-            'user_id' => $clientId,
-            'product_ids' => implode(',', $productIds),
-            'total_price' => $totalPrice,
-            'order_date' => date('Y-m-d H:i:s'),
-        ];
-
-        $orderModel->insert($orderData);
-
-        $cartModel->where('client_id', $clientId)->delete();
-
-        return redirect()->to('/cart')->with('success', 'Votre commande a été validée avec succès.');
     }
+
+    // Convertir `product_ids` en JSON pour garder la structure de la liste avec quantités
+    $orderData = [
+        'user_id' => $clientId,
+        'product_ids' => json_encode($productIds),  // Stocker en format JSON
+        'total_price' => $totalPrice,
+        'order_date' => date('Y-m-d H:i:s'),
+    ];
+
+    $orderModel->insert($orderData);
+
+    // Vider le panier après validation de la commande
+    $cartModel->where('client_id', $clientId)->delete();
+
+    return redirect()->to('/cart')->with('success', 'Votre commande a été validée avec succès.');
+}
+
+
+
+public function remove($productId)
+{
+    if (!session()->get('isLoggedIn')) {
+        return redirect()->to('/login')->with('error', 'Vous devez être connecté pour gérer votre panier.');
+    }
+
+    $clientId = session()->get('id');
+    $cartModel = new CartModel();
+
+    // Supprimer le produit spécifique du panier
+    $cartModel->where(['client_id' => $clientId, 'product_id' => $productId])->delete();
+
+    return redirect()->to('/cart')->with('success', 'Produit supprimé du panier avec succès.');
+}
+
+
 }

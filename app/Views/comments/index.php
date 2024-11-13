@@ -9,13 +9,6 @@
     </div>
 <?php endif; ?>
 
-<form action="/comments/store" method="post">
-    <?= csrf_field(); ?>
-    <div class="form-group">
-        <textarea class="form-control" name="content" rows="4" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Leave a Comment</button>
-</form>
 
 <h2 class="mt-4">All Comments</h2>
 <ul class="list-group">
@@ -31,5 +24,15 @@
         <li class="list-group-item">No comments yet.</li>
     <?php endif; ?>
 </ul>
+
+
+<form action="/comments/store" method="post">
+    <?= csrf_field(); ?>
+    <div class="form-group">
+        <textarea class="form-control" name="content" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Leave a Comment</button>
+</form>
+
 
 <?= $this->endSection() ?>
