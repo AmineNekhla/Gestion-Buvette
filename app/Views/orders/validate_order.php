@@ -5,7 +5,7 @@
 <div class="container mt-5">
     <h2>Validation de la commande</h2>
 
-    <form action="<?= base_url('order/confirm/' . $order['id']) ?>" method="post">
+    <form action="" method="post">
         <div class="form-group">
             <label>Nom de l'utilisateur</label>
             <input type="text" class="form-control" value="<?= esc($user['username']) ?>" readonly>
