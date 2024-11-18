@@ -1,7 +1,10 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
-<h1 class="mb-4">Comments</h1>
+
+<div class="card-header text-center text-white py-3" style="background-color: #ABDACA;">
+            <h2 class="mb-0">Comments</h2>
+        </div>
 
 <?php if (session()->getFlashdata('success')): ?>
     <div class="alert alert-success">
@@ -10,7 +13,6 @@
 <?php endif; ?>
 
 
-<h2 class="mt-4">All Comments</h2>
 <ul class="list-group">
     <?php if (!empty($comments)): ?>
         <?php foreach ($comments as $comment): ?>
@@ -24,14 +26,16 @@
         <li class="list-group-item">No comments yet.</li>
     <?php endif; ?>
 </ul>
-
+<br>
+    <br>
+    
 
 <form action="/comments/store" method="post">
     <?= csrf_field(); ?>
     <div class="form-group">
         <textarea class="form-control" name="content" rows="4" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Leave a Comment</button>
+    <button type="submit" class="btn btn-primary" style="background-color: #2C3E50;">Leave a Comment</button>
 </form>
 
 

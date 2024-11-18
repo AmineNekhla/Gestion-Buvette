@@ -3,11 +3,21 @@
 <?= $this->section('content') ?>
 
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <h2 class="text-center">Inscription</h2>
+    <div class="row g-0">
+        <!-- Section de l'image -->
+        <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center" style="background: url('https://img.freepik.com/free-vector/ordering-food-online_23-2147507727.jpg?t=st=1731857688~exp=1731861288~hmac=2e7704495ed35e230e4dc85a9753f1b7fadc85b8d084238d38e089bf09ac2204&w=740') no-repeat center; background-size: cover;">
+            <div class="text-center text-white p-5">
+                <h1 class="fw-bold">THE STUDIO</h1>
+                <p class="mt-3">Votre tagline ici</p>
+            </div>
+        </div>
+
+        <!-- Section du formulaire -->
+        <div class="col-md-6 d-flex align-items-center">
+            <div class="card shadow-lg w-100" style="min-height: 400px;">
+                <div class="card-headers text-white" style=" background-color: #ABDACA;">
+                    <h2 class="text-center">Bienvenue</h2>
+                    <p class="text-center mb-0">Merci de revenir, veuillez vous inscrire</p>
                 </div>
                 <div class="card-body">
                     <?php if(session()->getFlashdata('success')): ?>
@@ -36,10 +46,10 @@
                             <input type="password" class="form-control" name="password" placeholder="Entrez votre mot de passe" required>
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-dark">S'inscrire</button>
+                            <button type="submit" class="btn" style=" background-color: #ABDACA;" >S'inscrire</button>
                         </div>
                     </form>
-                    <p class="mt-3 text-center">Déjà un membre? <a href="<?= site_url('login') ?>">Se connecter</a></p>
+                    <p class="mt-3 text-center" >Déjà un membre? <a style="color: #ABDACA;" href="<?= site_url('login') ?>">Se connecter</a></p>
                 </div>
             </div>
         </div>

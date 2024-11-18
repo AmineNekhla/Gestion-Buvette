@@ -7,111 +7,108 @@
     <title>Home Page</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
-            background: linear-gradient(135deg, #d3f8e2, #e6f4e7);
-            background-color: white;
+    body {
+        background: linear-gradient(135deg, #d3f8e2, #e6f4e7);
+        background-color: white;
+        margin: 0;
+        padding: 0;
+    }
 
-        }
-        .hero-section {
-            /* background-color: #f9f9f9; */
-            background-color: white;
-            padding: 50px 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            border-bottom-left-radius: 50% 20%;
-            border-bottom-right-radius: 50% 20%;
-        }
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #2b4c28;
-            margin-bottom: 20px;
-        }
-        .hero-btn {
-            background-color: #6db872;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        .hero-btn:hover {
-            background-color: #5a9a60;
-        }
-        .hero-img {
+    nav {
+        z-index: 10; /* Assure que le nav reste au-dessus */
+        position: relative;
+    }
 
-            max-width: 700px;
-            width: 100%;
-            margin-bottom: 30px;
-            background-color: #f9f9f9;
-            margin-top: -4%;
+    .hero-section {
+        background-color: white;
+        padding: 50px 20px;
+        text-align: center;
+        position: relative;
+        border-bottom-left-radius: 60% 25%;
+        border-bottom-right-radius: 60% 25%;
+        height: 500px; /* Ajustez la hauteur de l'arc */
+    }
 
-        }
-        .info-section {
-            background: linear-gradient(135deg, #d3f8e2, #e6f4e7);
-            padding: 50px;
-            text-align: center;
-        }
-        .info-title {
-            font-size: 1.8rem;
-            color: #2b4c28;
-            margin-bottom: 20px;
-        }
-    </style>
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2b4c28;
+        margin-bottom: 20px;
+        margin-top: 20px;
+       
+    }
+
+    .hero-btn {
+        background-color: #6db872;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .hero-btn:hover {
+        background-color: #5a9a60;
+    }
+
+    .hero-img {
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+        display: block;
+        position: relative; /* Supprime le positionnement absolu */
+        top: -180px; /* Décalage léger vers le haut */
+        z-index: 1;
+    }
+
+    .info-section {
+        background: linear-gradient(135deg, #d3f8e2, #e6f4e7);
+        padding: 50px;
+        text-align: center;
+    }
+
+    .info-title {
+        font-size: 1.8rem;
+        color: #2b4c28;
+        margin-bottom: 20px;
+    }
+</style>
+
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/home">Buvette Ibn Zohr</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
+    <a class="navbar-brand" href="/home">Buvette Ibn Zohr</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
             <?php if (session()->get('isLoggedIn')): ?>
+                <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Order</a></li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products">Products</a>
+                    <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Order</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
-
-
-                </li>
-                <li class="nav-item">
-        <a class="nav-link" href="/comments">Comments</a>
-    </li>
-               <?php if (session()->get('role') == 1): ?>
-    <li class="nav-item">
-        <a class="nav-link" href="/products/create">Add Product</a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link" href="#">Manage Order</a>
-    </li>
-<?php endif; ?>
-
+                <li class="nav-item"><a class="nav-link" href="/comments">Comments</a></li>
+                <?php if (session()->get('role') == 1): ?>
+                    <li class="nav-item"><a class="nav-link" href="/products/create">Add Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Manage Order</a></li>
+                <?php endif; ?>
             <?php endif; ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="hero-section">
-        <!-- <img src="https://img.freepik.com/free-vector/blank-menu_1308-31063.jpg?t=st=1730642719~exp=1730646319~hmac=c4380ff09ef057b89311f88ec95cfd3c8992b4266ddeb85c5ce4a95cc844fe62&w=740" alt="Teamwork Illustration" class="hero-img"> -->
-        <img src="https://img.freepik.com/free-vector/people-sitting-cafe-flat-design_23-2148234523.jpg?t=st=1730642920~exp=1730646520~hmac=6023b83aa4ab1cc1272cc7dba217e5c6396c299536c2eecc024e92799b0b15bb&w=740" alt="Teamwork Illustration" class="hero-img">
-
-        <h1 class="hero-title">Take Your Career to the Next Level with Buvette</h1>
-        <a  href="/products"  class="hero-btn">order</a>
+            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        </ul>
     </div>
-    <div class="info-section">
-        <h2 class="info-title">Why Buvette for Professionals & Job Seekers</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, alias unde voluptatem corporis odit esse porro praesentium provident atque, quos ex perferendis, non omnis ducimus impedit. Vitae, repellendus. Cupiditate, harum. </p>
-    </div>
+</nav>
+
+<div class="hero-section">
+    <img src="https://img.freepik.com/free-vector/people-sitting-cafe-flat-design_23-2148234523.jpg?t=st=1730642920~exp=1730646520~hmac=6023b83aa4ab1cc1272cc7dba217e5c6396c299536c2eecc024e92799b0b15bb&w=740" alt="Teamwork Illustration" class="hero-img">
+    <h1  style="color: #2C3E50;" class="hero-title">Take Your Career to the Next Level with Buvette</h1>
+    <a href="/products" style="background-color: #2C3E50;" class="hero-btn">Order</a>
+</div>
+
+<div class="info-section">
+    <h2  style="color: #2C3E50;" class="info-title">Why Buvette for Professionals & Job Seekers</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, alias unde voluptatem corporis odit esse porro praesentium provident atque, quos ex perferendis, non omnis ducimus impedit. Vitae, repellendus. Cupiditate, harum.</p>
+</div>
+
 </body>
 </html>

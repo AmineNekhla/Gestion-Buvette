@@ -1,32 +1,55 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
-<h1 class="mb-4">Edit Product</h1>
+<div class="container mt-5">
+    <div class="row g-0">
+        <!-- Section de l'image -->
+        <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center" style="background: url('https://img.freepik.com/free-vector/ordering-food-online_23-2147507727.jpg?t=st=1731857688~exp=1731861288~hmac=2e7704495ed35e230e4dc85a9753f1b7fadc85b8d084238d38e089bf09ac2204&w=740') no-repeat center; background-size: cover;">
+            <div class="text-center text-white p-5">
+                <h1 class="fw-bold shadow-lg">EDIT PRODUCT</h1>
+                <p class="mt-3 shadow-lg">Modifiez les détails de votre produit</p>
+            </div>
+        </div>
 
-<?php if (session()->has('errors')): ?>
-    <div class="alert alert-danger">
-        <ul>
-            <?php foreach (session('errors') as $error): ?>
-                <li><?= esc($error) ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <!-- Section du formulaire -->
+        <div class="col-md-6 d-flex align-items-center">
+            <div class="card shadow-lg w-100" style="min-height: 400px;">
+                <div class="card-header text-white text-center" style="background-color: #ABDACA;">
+                    <h2 class="text-center mb-0">Modifier le produit</h2>
+                </div>
+                <div class="card-body">
+                    <?php if (session()->has('errors')): ?>
+                        <div class="alert alert-danger">
+                            <ul>
+                                <?php foreach (session('errors') as $error): ?>
+                                    <li><?= esc($error) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="/products/update/<?= esc($product['id']) ?>" method="post" enctype="multipart/form-data">
+                        <?= csrf_field(); ?>
+                        <div class="form-group mb-3">
+                            <label for="name">Nom du produit</label>
+                            <input type="text" class="form-control" id="name" name="name" value="<?= esc($product['name']) ?>" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="price">Prix</label>
+                            <input type="text" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="image">Télécharger une nouvelle image (optionnel)</label>
+                            <input type="file" class="form-control-file" id="image" name="image">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn text-white" style="background-color: #2C3E50;">Mettre à jour</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-<?php endif; ?>
-<form action="/products/update/<?= esc($product['id']) ?>" method="post" enctype="multipart/form-data">
-    <?= csrf_field(); ?>
-    <div class="form-group">
-        <label for="name">Product Name</label>
-        <input type="text" class="form-control" id="name" name="name" value="<?= esc($product['name']) ?>" required>
-    </div>
-    <div class="form-group">
-        <label for="price">Price</label>
-        <input type="text" class="form-control" id="price" name="price" value="<?= esc($product['price']) ?>" required>
-    </div>
-    <div class="form-group">
-        <label for="image">Upload New Image (Optional)</label>
-        <input type="file" class="form-control" id="image" name="image">
-    </div>
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
+</div>
 
 <?= $this->endSection() ?>

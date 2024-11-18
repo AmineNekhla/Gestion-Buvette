@@ -79,6 +79,7 @@ class OrderController extends BaseController
         'user' => $user,
         'products' => $products, // Liste des noms des produits
     ]);
+
 }
 
 
