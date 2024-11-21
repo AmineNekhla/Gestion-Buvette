@@ -42,7 +42,7 @@
                             <button type="submit" class="btn" style="background-color: #ABDACA;">Se connecter</button>
                         </div>
                     </form>
-                    <p class="mt-3 text-center">Pas encore un membre? <a style="color: #ABDACA;" href="/">S'inscrire</a></p>
+                    <p class="mt-3 text-center">Pas encore un membre? <a style="color: #ABDACA;" href="/register">S'inscrire</a></p>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/home">Buvette Ibn Zohr</a>
+    <a class="navbar-brand" href="/">Buvette Ibn Zohr</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             <?php if (session()->get('isLoggedIn')): ?>
