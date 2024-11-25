@@ -8,38 +8,31 @@
             <h2 class="mb-0">Validation de la commande</h2>
         </div>
         <div class="card-body">
-            <form action="" method="post">
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Nom de l'utilisateur</label>
-                    <input type="text" class="form-control bg-light" value="<?= esc($user['username']) ?>" readonly>
-                </div>
+        <form action="<?= base_url('/order/saveValidation') ?>" method="post">
+        <div class="mb-4">
+    <label class="form-label fw-bold">ID de l'utilisateur</label>
+    <input type="text" class="form-control bg-light" value="<?= esc($user['id']) ?>" readonly>
+    <input type="hidden" name="user_id" value="<?= esc($user['id']) ?>">
+</div>
+    <input type="hidden" name="username" value="<?= esc($user['username']) ?>">
+    <input type="hidden" name="email" value="<?= esc($user['email']) ?>">
+    <input type="hidden" name="products" value="<?= !empty($products) ? implode(', ', $products) : 'Aucun produit' ?>">
+    <input type="hidden" name="total_price" value="<?= esc($order['total_price']) ?>">
 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Email de l'utilisateur</label>
-                    <input type="text" class="form-control bg-light" value="<?= esc($user['email']) ?>" readonly>
-                </div>
+    <div class="mb-4">
+        <label class="form-label fw-bold">Description (à remplir par l'admin)</label>
+        <textarea name="description" class="form-control" rows="4" placeholder="Ajoutez une description ici"></textarea>
+    </div>
+    
 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Produits</label>
-                    <textarea class="form-control bg-light" rows="3" readonly><?= !empty($products) ? implode(', ', $products) : 'Aucun produit' ?></textarea>
-                </div>
 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Prix total</label>
-                    <input type="text" class="form-control bg-light fw-bold text-success" value="<?= esc($order['total_price']) ?> MAD" readonly>
-                </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-success px-5">
+            <i class="bi bi-check-circle"></i> Valider la commande
+        </button>
+    </div>
+</form>
 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Description (à remplir par l'admin)</label>
-                    <textarea name="description" class="form-control" rows="4" placeholder="Ajoutez une description ici"></textarea>
-                </div>
-
-                <div class="text-center">
-                    <button style="background-color: #2C3E50;" type="submit" class="btn btn-success px-5">
-                        <i class="bi bi-check-circle"></i> Valider la commande
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

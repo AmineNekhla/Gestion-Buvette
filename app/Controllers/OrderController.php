@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\OrderModel;
 use App\Models\UserModel;
 use App\Models\ProductModel;
+use App\Models\ValidationModel;
 
 class OrderController extends BaseController
 {
@@ -44,46 +45,59 @@ class OrderController extends BaseController
     
         return view('orders/manage', ['orders' => $orders]);
     }
-    
-
 
     public function validateO($orderId)
-{
-    $orderModel = new OrderModel();
-    $userModel = new UserModel();
-    $productModel = new ProductModel();
-
-    $order = $orderModel->find($orderId);
-
-    if (!$order) {
-        return redirect()->to('/orders/manage')->with('error', 'Commande introuvable.');
-    }
-
-    $user = $userModel->find($order['user_id']);
-
-    // Décoder les `product_ids` au format JSON
-    $productIds = json_decode($order['product_ids'], true);
-    $products = [];
-
-    if (is_array($productIds)) {
-        foreach ($productIds as $productId) {
-            $product = $productModel->find($productId);
-            if ($product) {
-                $products[] = $product['name'];
+    {
+        $orderModel = new OrderModel();
+        $userModel = new UserModel();
+        $productModel = new ProductModel();
+    
+        $order = $orderModel->find($orderId);
+    
+        if (!$order) {
+            return redirect()->to('/orders/manage')->with('error', 'Commande introuvable.');
+        }
+    
+        $user = $userModel->find($order['user_id']);
+    
+        // Decode `product_ids` JSON
+        $productIds = json_decode($order['product_ids'], true);
+        $products = [];
+    
+        if (is_array($productIds)) {
+            foreach ($productIds as $productId) {
+                $product = $productModel->find($productId);
+                if ($product) {
+                    $products[] = $product['name'];
+                }
             }
         }
+    
+        return view('orders/validate_order', [
+            'order' => $order,
+            'user' => $user,
+            'products' => $products, // List of product names
+        ]);
     }
-
-    return view('orders/validate_order', [
-        'order' => $order,
-        'user' => $user,
-        'products' => $products, // Liste des noms des produits
-    ]);
-
-}
-
-
-
-
-
-}
+    public function saveValidation()
+    {
+        $validationModel = new ValidationModel();
+    
+        // Retrieve form data
+        $data = [
+            'user_id' => $this->request->getPost('user_id'),
+            'username' => $this->request->getPost('username'),
+            'email' => $this->request->getPost('email'),
+            'products' => $this->request->getPost('products'),
+            'total_price' => $this->request->getPost('total_price'),
+            'description' => $this->request->getPost('description'),
+        ];
+    
+        // Save data to the validation table
+        if ($validationModel->insert($data)) {
+            return redirect()->to('/orders/manage')->with('success', 'Commande validée et enregistrée avec succès!');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Erreur lors de l\'enregistrement de la commande.');
+        }
+    }
+    }

@@ -34,7 +34,19 @@ $routes->get('cart/remove/(:num)', 'CartController::remove/$1');
 $routes->get('order/validateO/(:num)', 'OrderController::validateO/$1');
 
 
+$routes->get('/orders/manage', 'OrderController::manageOrders');
+$routes->get('/order/validate/(:num)', 'OrderController::validateO/$1');
+$routes->post('/order/saveValidation', 'OrderController::saveValidation');
 
 
 $routes->get('/productsForm', 'ProductFormController::index');
 $routes->post('/productsForm/add', 'ProductFormController::add');
+
+// Route to view user responses (for logged-in users)
+$routes->get('/responses', 'ResponseController::index');
+
+// Route to fetch a specific response (using its ID)
+$routes->get('/response/get/(:num)', 'ResponseController::getResponse/$1');
+
+// Route to migrate responses from the `validation` table to the new `user_responses` table
+$routes->get('/response/migrate', 'ResponseController::migrateResponses');
