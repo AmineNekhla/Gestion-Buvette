@@ -1,37 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Responses</title>
+    <title>Responses</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Admin Responses</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Response ID</th>
-                <th>Validation ID</th>
-                <th>Response</th>
-                <th>Created At</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($responses)): ?>
+    <h1>Responses</h1>
+    <?php if (!empty($responses)): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Total Price</th>
+                    <th>Response</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php foreach ($responses as $response): ?>
                     <tr>
-                        <td><?= $response['id'] ?></td>
-                        <td><?= $response['validation_id'] ?></td>
-                        <td><?= $response['response'] ?></td>
-                        <td><?= $response['created_at'] ?></td>
+                        <td><?= esc($response['products']) ?></td>
+                        <td><?= esc($response['total_price']) ?></td>
+                        <td><?= esc($response['response']) ?></td>
+                        <td><?= esc($response['created_at']) ?></td>
                     </tr>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="4">No responses available.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No responses available.</p>
+    <?php endif; ?>
 </body>
 </html>

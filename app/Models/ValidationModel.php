@@ -8,5 +8,5 @@ class ValidationModel extends Model
 {
     protected $table = 'validation';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['user_id', 'username', 'email', 'products', 'total_price', 'description'];
+    protected $allowedFields = ['user_id', 'username', 'email', 'products', 'total_price', 'description', 'created_at'];
 }

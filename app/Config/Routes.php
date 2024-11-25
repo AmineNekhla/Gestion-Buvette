@@ -48,5 +48,15 @@ $routes->get('/responses', 'ResponseController::index');
 // Route to fetch a specific response (using its ID)
 $routes->get('/response/get/(:num)', 'ResponseController::getResponse/$1');
 
-// Route to migrate responses from the `validation` table to the new `user_responses` table
+
+
+// Route for schema synchronization
+$routes->get('/response/sync-schemas', 'ResponseController::syncSchemas');
+
+// Route for data migration
 $routes->get('/response/migrate', 'ResponseController::migrateResponses');
+
+// Route for combined schema sync and migration
+$routes->get('/response/migrate-and-sync', 'ResponseController::migrateAndSync');
+
+$routes->cli('migrate-responses', 'ResponseController::migrateCli');
