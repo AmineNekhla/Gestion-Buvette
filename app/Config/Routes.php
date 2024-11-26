@@ -66,3 +66,5 @@ $routes->cli('migrate-responses', 'ResponseController::migrateCli');
 
 $routes->post('/order/updateStatus', 'OrderController::updateStatus');
 $routes->get('/responses', 'ResponseController::index');
+
+$routes->get('order/downloadReceipt/(:num)', 'OrderController::downloadReceipt/$1');
