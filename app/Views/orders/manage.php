@@ -15,7 +15,7 @@
                         <th>Nom de l'utilisateur</th>
                         <th>Produits</th>
                         <th>Prix total</th>
-                        <th>Date de la commande</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,19 +27,14 @@
                     <?php else: ?>
                         <?php foreach ($orders as $order): ?>
                             <tr>
-                                <td><span class="badge bg-secondary"><?= esc($order['id']) ?></span></td>
+                                <td><?= esc($order['id']) ?></td>
                                 <td><?= esc($order['username']) ?></td>
+                                <td><?= implode('<br>', $order['products']) ?></td>
+                                <td><?= esc($order['total_price']) ?> MAD</td>
+                                <td><?= ucfirst($order['status']) ?></td>
                                 <td>
-                                    <?= !empty($order['products']) 
-                                        ? implode('<br>', $order['products']) 
-                                        : '<span class="text-muted">Aucun produit</span>' ?>
-                                </td>
-                                <td class="fw-bold text-success"><?= esc($order['total_price']) ?> MAD</td>
-                                <td><?= esc($order['order_date']) ?></td>
-                                <td>
-                                    <a style="background-color: #2C3E50;" href="<?= base_url('order/validateO/' . $order['id']) ?>" class="btn btn-sm btn-success">
-                                        <i class="bi bi-check-circle"></i> Valider
-                                    </a>
+                                    <button class="btn btn-sm btn-success validate-order" data-order-id="<?= esc($order['id']) ?>">Valider</button>
+                                    <button class="btn btn-sm btn-danger decline-order" data-order-id="<?= esc($order['id']) ?>">Décliner</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -49,5 +44,57 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.validate-order').forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = this.getAttribute('data-order-id');
+
+            fetch(`<?= base_url('order/updateStatus') ?>`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ id: orderId, status: 'validated' }),
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    alert('Commande validée!');
+                    location.reload();
+                } else {
+                    alert('Erreur: ' + data.error);
+                }
+            }).catch(error => {
+                console.error(error);
+                alert('Erreur: Une erreur inattendue s\'est produite.');
+            });
+        });
+    });
+
+    document.querySelectorAll('.decline-order').forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = this.getAttribute('data-order-id');
+
+            fetch(`<?= base_url('order/updateStatus') ?>`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ id: orderId, status: 'declined' }),
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    alert('Commande annulée!');
+                    location.reload();
+                } else {
+                    alert('Erreur: ' + data.error);
+                }
+            }).catch(error => {
+                console.error(error);
+                alert('Erreur: Une erreur inattendue s\'est produite.');
+            });
+        });
+    });
+</script>
 
 <?= $this->endSection() ?>

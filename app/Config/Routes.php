@@ -30,6 +30,7 @@ $routes->post('comments/store', 'CommentController::store');
 $routes->get('cart/validate', 'CartController::validateOrder');
 
 $routes->get('/manage-orders', 'OrderController::manageOrders');
+
 $routes->get('cart/remove/(:num)', 'CartController::remove/$1');
 $routes->get('order/validateO/(:num)', 'OrderController::validateO/$1');
 
@@ -43,7 +44,7 @@ $routes->get('/productsForm', 'ProductFormController::index');
 $routes->post('/productsForm/add', 'ProductFormController::add');
 
 // Route to view user responses (for logged-in users)
-$routes->get('/responses', 'ResponseController::index');
+
 
 // Route to fetch a specific response (using its ID)
 $routes->get('/response/get/(:num)', 'ResponseController::getResponse/$1');
@@ -60,3 +61,8 @@ $routes->get('/response/migrate', 'ResponseController::migrateResponses');
 $routes->get('/response/migrate-and-sync', 'ResponseController::migrateAndSync');
 
 $routes->cli('migrate-responses', 'ResponseController::migrateCli');
+
+
+
+$routes->post('/order/updateStatus', 'OrderController::updateStatus');
+$routes->get('/responses', 'ResponseController::index');

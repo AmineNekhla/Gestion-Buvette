@@ -9,11 +9,8 @@
         </div>
         <div class="card-body">
         <form action="<?= base_url('/order/saveValidation') ?>" method="post">
-        <div class="mb-4">
-    <label class="form-label fw-bold">ID de l'utilisateur</label>
-    <input type="text" class="form-control bg-light" value="<?= esc($user['id']) ?>" readonly>
+    <input type="hidden" name="order_id" value="<?= esc($order['id']) ?>"> <!-- Add this -->
     <input type="hidden" name="user_id" value="<?= esc($user['id']) ?>">
-</div>
     <input type="hidden" name="username" value="<?= esc($user['username']) ?>">
     <input type="hidden" name="email" value="<?= esc($user['email']) ?>">
     <input type="hidden" name="products" value="<?= !empty($products) ? implode(', ', $products) : 'Aucun produit' ?>">
@@ -23,8 +20,6 @@
         <label class="form-label fw-bold">Description (à remplir par l'admin)</label>
         <textarea name="description" class="form-control" rows="4" placeholder="Ajoutez une description ici"></textarea>
     </div>
-    
-
 
     <div class="text-center">
         <button type="submit" class="btn btn-success px-5">
@@ -32,6 +27,7 @@
         </button>
     </div>
 </form>
+
 
         </div>
     </div>
