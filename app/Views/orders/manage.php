@@ -129,6 +129,36 @@
         // Hide modal
         document.getElementById('declineModal').style.display = 'none';
     });
+    // Handle "Validate" button click
+document.querySelectorAll('.validate-order').forEach(button => {
+    button.addEventListener('click', function () {
+        const orderId = this.getAttribute('data-order-id'); // Get order ID
+
+        // Send validation request
+        fetch(`<?= base_url('order/updateStatus') ?>`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({ id: orderId, status: 'validated' }), // Send validation status
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Commande validée avec succès!');
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    alert('Erreur: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Erreur: Une erreur inattendue s\'est produite.');
+            });
+    });
+});
+
 </script>
 
 <?= $this->endSection() ?>
