@@ -28,8 +28,8 @@
                         <?php foreach ($orders as $order): ?>
                             <tr>
                                 <td><?= esc($order['id']) ?></td>
-                                <td><?= esc($order['username']) ?></td>
-                                <td><?= implode('<br>', $order['products']) ?></td>
+                                <td><?= esc($order['user_id']) ?></td>
+                                <td><?= esc($order['product_ids']) ?></td>
                                 <td><?= esc($order['total_price']) ?> MAD</td>
                                 <td><?= ucfirst($order['status']) ?></td>
                                 <td>
@@ -45,55 +45,89 @@
     </div>
 </div>
 
-<script>
-    document.querySelectorAll('.validate-order').forEach(button => {
-        button.addEventListener('click', function () {
-            const orderId = this.getAttribute('data-order-id');
+<!-- Decline Modal -->
+<div class="modal" id="declineModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Raison du refus</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Veuillez sélectionner la raison du refus :</p>
+                <select id="declineReason" class="form-control">
+                    <option value="out_of_stock">Rupture de stock</option>
+                    <option value="closed">Fermé</option>
+                    <option value="other">Autre</option>
+                </select>
+                <textarea id="declineOtherReason" class="form-control mt-3" placeholder="Autre raison (optionnel)" style="display: none;"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmDecline">Confirmer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            fetch(`<?= base_url('order/updateStatus') ?>`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({ id: orderId, status: 'validated' }),
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    alert('Commande validée!');
-                    location.reload();
-                } else {
-                    alert('Erreur: ' + data.error);
-                }
-            }).catch(error => {
-                console.error(error);
-                alert('Erreur: Une erreur inattendue s\'est produite.');
-            });
+<script>
+    let declineOrderId = null;
+
+    // Show modal when "Decline" button is clicked
+    document.querySelectorAll('.decline-order').forEach(button => {
+        button.addEventListener('click', function () {
+            declineOrderId = this.getAttribute('data-order-id');
+            document.getElementById('declineModal').style.display = 'block'; // Show modal
         });
     });
 
-    document.querySelectorAll('.decline-order').forEach(button => {
-        button.addEventListener('click', function () {
-            const orderId = this.getAttribute('data-order-id');
+    // Show "Other" text area if "Other" is selected
+    document.getElementById('declineReason').addEventListener('change', function () {
+        const otherReasonField = document.getElementById('declineOtherReason');
+        if (this.value === 'other') {
+            otherReasonField.style.display = 'block';
+        } else {
+            otherReasonField.style.display = 'none';
+        }
+    });
 
-            fetch(`<?= base_url('order/updateStatus') ?>`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({ id: orderId, status: 'declined' }),
-            }).then(response => response.json()).then(data => {
+    // Handle "Confirm Decline" button
+    document.getElementById('confirmDecline').addEventListener('click', function () {
+        const reasonSelect = document.getElementById('declineReason');
+        const otherReasonField = document.getElementById('declineOtherReason');
+        const reason = reasonSelect.value === 'other' ? otherReasonField.value : reasonSelect.value;
+
+        if (!reason) {
+            alert('Veuillez fournir une raison pour le refus.');
+            return;
+        }
+
+        fetch(`<?= base_url('order/updateStatus') ?>`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({ id: declineOrderId, status: 'declined', reason: reason }),
+        })
+            .then(response => response.json())
+            .then(data => {
                 if (data.success) {
-                    alert('Commande annulée!');
+                    alert('Commande refusée avec succès!');
                     location.reload();
                 } else {
                     alert('Erreur: ' + data.error);
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error(error);
                 alert('Erreur: Une erreur inattendue s\'est produite.');
             });
-        });
+
+        // Hide modal
+        document.getElementById('declineModal').style.display = 'none';
     });
 </script>
 
