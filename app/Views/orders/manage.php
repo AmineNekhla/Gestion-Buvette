@@ -20,26 +20,27 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <?php if (empty($orders)): ?>
-                        <tr>
-                            <td colspan="6" class="text-muted">Aucune commande trouvée</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($orders as $order): ?>
-                            <tr>
-                                <td><?= esc($order['id']) ?></td>
-                                <td><?= esc($order['user_id']) ?></td>
-                                <td><?= esc($order['product_ids']) ?></td>
-                                <td><?= esc($order['total_price']) ?> MAD</td>
-                                <td><?= ucfirst($order['status']) ?></td>
-                                <td>
-                                    <button class="btn btn-sm btn-success validate-order" data-order-id="<?= esc($order['id']) ?>">Valider</button>
-                                    <button class="btn btn-sm btn-danger decline-order" data-order-id="<?= esc($order['id']) ?>">Décliner</button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
+    <?php if (empty($orders)): ?>
+        <tr>
+            <td colspan="6" class="text-muted">Aucune commande trouvée</td>
+        </tr>
+    <?php else: ?>
+        <?php foreach ($orders as $order): ?>
+            <tr>
+                <td><?= esc($order['id']) ?></td>
+                <td><?= esc($order['user_name']) ?></td> <!-- Display user name -->
+                <td><?= esc($order['product_names']) ?></td> <!-- Display product names -->
+                <td><?= esc($order['total_price']) ?> MAD</td>
+                <td><?= ucfirst($order['status']) ?></td>
+                <td>
+                    <button class="btn btn-sm btn-success validate-order" data-order-id="<?= esc($order['id']) ?>">Valider</button>
+                    <button class="btn btn-sm btn-danger decline-order" data-order-id="<?= esc($order['id']) ?>">Décliner</button>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</tbody>
+
             </table>
         </div>
     </div>
@@ -115,7 +116,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Commande refusée avec succès!');
+                
                     location.reload();
                 } else {
                     alert('Erreur: ' + data.error);
@@ -146,7 +147,7 @@ document.querySelectorAll('.validate-order').forEach(button => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Commande validée avec succès!');
+                 
                     location.reload(); // Reload the page to reflect changes
                 } else {
                     alert('Erreur: ' + data.error);

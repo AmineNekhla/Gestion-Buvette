@@ -75,7 +75,8 @@
         <?php foreach ($responses as $response): ?>
             <tr>
                 <td><?= esc($response['validation_id']) ?></td>
-                <td><?= esc($response['product_name'] ?? 'Unknown Product') ?></td>
+                <td><?= esc($response['product_names'] ?? 'Unknown Product') ?></td>
+
                 <td><?= esc($response['response']) ?></td>
                 <td><?= esc($response['created_at']) ?></td>
             </tr>

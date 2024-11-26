@@ -21,4 +21,5 @@ class ResponseController extends BaseController
         return view('responses/index', ['responses' => $responses]);
     }
     
+    
 }

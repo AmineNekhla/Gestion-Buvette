@@ -44,12 +44,44 @@ class OrderController extends BaseController
     }
 
     public function manageOrders()
-    {
-        $orderModel = new OrderModel();
+{
+    $orderModel = new \App\Models\OrderModel();
+    $productModel = new \App\Models\ProductModel();
+    $userModel = new \App\Models\UserModel();
 
-        // Fetch all orders
-        $orders = $orderModel->findAll();
+    // Fetch all orders
+    $orders = $orderModel->findAll();
 
-        return view('orders/manage', ['orders' => $orders]);
+    foreach ($orders as &$order) {
+        // Fetch user name
+        $user = $userModel->find($order['user_id']);
+        $order['user_name'] = $user['username'] ?? 'Unknown User';
+
+        // Handle product_ids format
+        $productIds = [];
+
+        // Check if the product_ids are in JSON format (e.g. '["1"]')
+        if (strpos($order['product_ids'], '[') !== false) {
+            // It's a JSON array
+            $productIds = json_decode($order['product_ids']);
+        } else {
+            // It's a comma-separated string
+            $productIds = explode(',', $order['product_ids']);
+        }
+
+        // Fetch products based on product IDs
+        $products = $productModel->whereIn('id', $productIds)->findAll();
+
+        // If products are found, extract names
+        if (empty($products)) {
+            $order['product_names'] = 'No products found';
+        } else {
+            $productNames = array_column($products, 'name'); // Extract product names
+            $order['product_names'] = implode(', ', $productNames); // Convert to comma-separated string
+        }
     }
+
+    return view('orders/manage', ['orders' => $orders]);
+    }
+
 }
