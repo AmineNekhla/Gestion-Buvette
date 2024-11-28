@@ -10,7 +10,7 @@
                 <p class="mt-3 shadow-lg">Ajoutez facilement vos produits ici</p>
             </div>
         </div>
-
+        
         <!-- Section du formulaire -->
         <div class="col-md-6 d-flex align-items-center">
             <div class="card shadow-lg w-100" style="min-height: 400px;">

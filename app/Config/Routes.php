@@ -40,9 +40,6 @@ $routes->get('/order/validate/(:num)', 'OrderController::validateO/$1');
 $routes->post('/order/saveValidation', 'OrderController::saveValidation');
 
 
-$routes->get('/productsForm', 'ProductFormController::index');
-$routes->post('/productsForm/add', 'ProductFormController::add');
-
 // Route to view user responses (for logged-in users)
 
 
