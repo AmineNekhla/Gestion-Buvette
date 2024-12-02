@@ -8,7 +8,7 @@ class CommentModel extends Model
 {
     protected $table = 'comments';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['user_id', 'content'];
+    protected $allowedFields = ['user_id', 'content', 'rating']; // Added rating here
     protected $useTimestamps = true;
 
     public function getCommentsWithUsers()
