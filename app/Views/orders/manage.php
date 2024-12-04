@@ -33,8 +33,10 @@
                 <td><?= esc($order['total_price']) ?> MAD</td>
                 <td><?= ucfirst($order['status']) ?></td>
                 <td>
-                    <button class="btn btn-sm btn-success validate-order" data-order-id="<?= esc($order['id']) ?>">Valider</button>
-                    <button class="btn btn-sm btn-danger decline-order" data-order-id="<?= esc($order['id']) ?>">Décliner</button>
+                    <div class="btn-group" role="group" aria-label="Order Actions">
+                        <button class="btn btn-sm btn-success validate-order" data-order-id="<?= esc($order['id']) ?>">Valider</button>
+                        <button class="btn btn-sm btn-danger decline-order" data-order-id="<?= esc($order['id']) ?>">Décliner</button>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -116,7 +118,6 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                
                     location.reload();
                 } else {
                     alert('Erreur: ' + data.error);
@@ -130,36 +131,65 @@
         // Hide modal
         document.getElementById('declineModal').style.display = 'none';
     });
+
     // Handle "Validate" button click
-document.querySelectorAll('.validate-order').forEach(button => {
-    button.addEventListener('click', function () {
-        const orderId = this.getAttribute('data-order-id'); // Get order ID
+    document.querySelectorAll('.validate-order').forEach(button => {
+        button.addEventListener('click', function () {
+            const orderId = this.getAttribute('data-order-id'); // Get order ID
 
-        // Send validation request
-        fetch(`<?= base_url('order/updateStatus') ?>`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: JSON.stringify({ id: orderId, status: 'validated' }), // Send validation status
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                 
-                    location.reload(); // Reload the page to reflect changes
-                } else {
-                    alert('Erreur: ' + data.error);
-                }
+            // Send validation request
+            fetch(`<?= base_url('order/updateStatus') ?>`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ id: orderId, status: 'validated' }), // Send validation status
             })
-            .catch(error => {
-                console.error(error);
-                alert('Erreur: Une erreur inattendue s\'est produite.');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Reload the page to reflect changes
+                    } else {
+                        alert('Erreur: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Erreur: Une erreur inattendue s\'est produite.');
+                });
+        });
     });
-});
-
 </script>
+
+<!-- Add custom styles for button layout -->
+<style>
+    /* Ensure the buttons are next to each other */
+    .btn-group {
+        display: flex;
+        gap: 10px; /* Adds space between the buttons */
+        justify-content: center;
+    }
+
+    .btn-group .btn {
+        width: auto; /* Ensure buttons only take necessary space */
+    }
+
+    /* Optional: Add hover effect to both buttons */
+    .btn-group .btn:hover {
+        opacity: 0.85;
+    }
+    
+    /* Add custom styling for the buttons if needed */
+    .btn-group .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-group .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+</style>
 
 <?= $this->endSection() ?>
