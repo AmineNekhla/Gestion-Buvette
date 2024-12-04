@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 <div class="card-header text-center text-white py-3" style="background-color: #2C3E50;">
-            <h2 class="mb-0">Welcome!</h2>
+            <h2 class="mb-0">Bienvenu!</h2>
         </div>
         <br>
 
@@ -14,7 +14,7 @@
 
 <?php if (session()->get('isLoggedIn')): ?>
     <?php if (session()->get('role') == 1): ?>
-        <a href="/products/create" class="btn btn-dark mb-4 d-block mx-auto" style="background-color: #ABDACA;">Add New Product</a>
+        <a href="/products/create" class="btn btn-dark mb-4 d-block mx-auto" style="background-color: #ABDACA;">Ajouter un nouveau produit</a>
     <?php endif; ?>
 <?php endif; ?>
 
@@ -30,15 +30,15 @@
 
                         <div class="card-body text-center">
                             <h5 class="card-title"><?= esc($product['name']) ?></h5>
-                            <p class="card-text text-muted">Price: <strong><?= esc($product['price']) ?> MAD</strong></p>
+                            <p class="card-text text-muted">Prix: <strong><?= esc($product['price']) ?> MAD</strong></p>
                         </div>
 
                         <div class="card-footer text-center">
                             <?php if (session()->get('role') == 1): ?>
-                                <a style="background-color:  #ABDACA;" href="/products/edit/<?= $product['id'] ?>" class="btn  btn-sm mx-2">Edit</a>
-                                <a style="background-color:  #BDC3C7;" href="/products/delete/<?= $product['id'] ?>" class="btn  btn-sm mx-2">Delete</a>
+                                <a style="background-color:  #ABDACA;" href="/products/edit/<?= $product['id'] ?>" class="btn  btn-sm mx-2">Editer</a>
+                                <a style="background-color:  #BDC3C7;" href="/products/delete/<?= $product['id'] ?>" class="btn  btn-sm mx-2">Effacer</a>
                             <?php endif; ?>
-                            <a href="/cart/add/<?= $product['id'] ?>" class="btn btn-dark btn-sm mx-2">Add to Cart</a>
+                            <a style="background-color:  #ABDACA;" href="/cart/add/<?= $product['id'] ?>" class="btn btn-dark btn-sm mx-2">Ajouter au panier</a>
                         </div>
                     </div>
                 </div>

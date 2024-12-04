@@ -37,8 +37,8 @@
                     
                     <div class="card-footer text-center">
                         <?php if (session()->get('email') == 'AdminBuvette@gmail.com'): ?>
-                            <a href="<?= site_url('products/edit/' . $product['id']) ?>" class="btn btn-light btn-sm shadow">Edit</a>
-                            <a href="<?= site_url('products/delete/' . $product['id']) ?>" class="btn btn-dark btn-sm shadow" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?');">Delete</a>
+                            <a href="<?= site_url('products/edit/' . $product['id']) ?>" class="btn btn-light btn-sm shadow">Editer</a>
+                            <a href="<?= site_url('products/delete/' . $product['id']) ?>" class="btn btn-dark btn-sm shadow" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?');">Supprimer</a>
                         <?php endif; ?>
                         <a href="<?= site_url('cart/add/' . $product['id']) ?>" class="btn btn-light btn-sm shadow">Add to cart</a>
                     </div>

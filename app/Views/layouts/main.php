@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'My App') ?></title>
+    <title><?= esc($title ?? 'Buvette Ibn Zohr') ?></title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -16,33 +16,33 @@
         <ul class="navbar-nav ml-auto">
             <?php if (session()->get('isLoggedIn') ?? false): ?>
                 <li class="nav-item <?= current_url() == base_url('/products') ? 'active' : '' ?>">
-                    <a class="nav-link" href="/products">Products</a>
+                    <a class="nav-link" href="/products">Produits</a>
                 </li>
                 <li class="nav-item <?= current_url() == base_url('/cart') ? 'active' : '' ?>">
-                    <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
+                    <a class="nav-link" href="/cart">Panier <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
                 </li>
                 <li class="nav-item <?= current_url() == base_url('/comments') ? 'active' : '' ?>">
-                    <a class="nav-link" href="/comments">Comments</a>
+                    <a class="nav-link" href="/comments">Commentaires</a>
                 </li>
                 <li class="nav-item <?= current_url() == base_url('/responses') ? 'active' : '' ?>">
-                    <a class="nav-link" href="/responses">Response</a>
+                    <a class="nav-link" href="/responses">réponses</a>
                 </li>
 
                 <?php if (session()->get('role') == 1): ?>
                     <li class="nav-item <?= current_url() == base_url('/products/create') ? 'active' : '' ?>">
-                        <a class="nav-link" href="/products/create">Add Product</a>
+                        <a class="nav-link" href="/products/create">Ajouter produit</a>
                     </li>
                     <li class="nav-item <?= current_url() == base_url('/manage-orders') ? 'active' : '' ?>">
-                        <a class="nav-link" href="/manage-orders">Manage Order</a>
+                        <a class="nav-link" href="/manage-orders">Gérer la commande</a>
                     </li>
                 <?php endif; ?>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="/logout">Déconnexion</a>
                 </li>
             <?php else: ?>
                 <li class="nav-item <?= current_url() == base_url('/login') ? 'active' : '' ?>">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/login">Connexion</a>
                 </li>
             <?php endif; ?>
         </ul>

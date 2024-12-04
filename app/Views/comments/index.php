@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" style="background-color: #2C3E50;">Leave a Comment</button>
+    <button type="submit" class="btn btn-primary" style="background-color: #2C3E50;">Laisser un commentaire</button>
 </form>
 
 <?= $this->endSection() ?>

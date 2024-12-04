@@ -80,49 +80,50 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Buvette Ibn Zohr</a>
-    <div class="collapse navbar-collapse">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <?php if (session()->get('isLoggedIn')): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/products">Products</a>
+            <?php if (session()->get('isLoggedIn') ?? false): ?>
+                <li class="nav-item <?= current_url() == base_url('/products') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/products">Produits</a>
                 </li>
-               
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart">Cart <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
+                <li class="nav-item <?= current_url() == base_url('/cart') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/cart">Panier <span class="badge badge-pill badge-secondary"><?= $itemCount ?? 0 ?></span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/comments">Comments</a>
+                <li class="nav-item <?= current_url() == base_url('/comments') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/comments">Commentaires</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="">valide order</a>
+                <li class="nav-item <?= current_url() == base_url('/responses') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/responses">réponses</a>
                 </li>
 
                 <?php if (session()->get('role') == 1): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/create">Add Product</a>
+                    <li class="nav-item <?= current_url() == base_url('/products/create') ? 'active' : '' ?>">
+                        <a class="nav-link" href="/products/create">Ajouter produit</a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="/manage-orders">Manage Order</a>
+                    <li class="nav-item <?= current_url() == base_url('/manage-orders') ? 'active' : '' ?>">
+                        <a class="nav-link" href="/manage-orders">Gérer la commande</a>
                     </li>
                 <?php endif; ?>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="/logout">Déconnexion</a>
                 </li>
             <?php else: ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                <li class="nav-item <?= current_url() == base_url('/login') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/login">Connexion</a>
                 </li>
             <?php endif; ?>
         </ul>
     </div>
 </nav>
 
-
 <div class="hero-section">
     <img src="https://img.freepik.com/free-vector/people-sitting-cafe-flat-design_23-2148234523.jpg?t=st=1730642920~exp=1730646520~hmac=6023b83aa4ab1cc1272cc7dba217e5c6396c299536c2eecc024e92799b0b15bb&w=740" alt="Teamwork Illustration" class="hero-img">
     <h1  style="color: #2C3E50;" class="hero-title">Simplifiez vos commandes en un clic</h1>
-    <a href="/products" style="background-color: #2C3E50;" class="hero-btn">Order</a>
+    <a href="/products" style="background-color: #2C3E50;" class="hero-btn">Commender</a>
 </div>
 
 <div class="info-section">

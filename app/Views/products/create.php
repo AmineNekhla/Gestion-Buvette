@@ -6,7 +6,7 @@
         <!-- Section de l'image -->
         <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center" style="background: url('https://img.freepik.com/free-vector/ordering-food-online_23-2147507727.jpg?t=st=1731857688~exp=1731861288~hmac=2e7704495ed35e230e4dc85a9753f1b7fadc85b8d084238d38e089bf09ac2204&w=740') no-repeat center; background-size: cover;">
             <div class="text-center text-white p-5">
-                <h1 class="fw-bold  shadow-lg">ADD PRODUCT</h1>
+                <h1 class="fw-bold  shadow-lg">ajouter produit</h1>
                 <p class="mt-3 shadow-lg">Ajoutez facilement vos produits ici</p>
             </div>
         </div>
