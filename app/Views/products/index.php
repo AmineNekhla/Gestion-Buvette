@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 <div class="card-header text-center text-white py-3" style="background-color: #2C3E50;">
-            <h2 class="mb-0">Bienvenu!</h2>
+            <h2 class="mb-0">Bienvenue!</h2>
         </div>
         <br>
 

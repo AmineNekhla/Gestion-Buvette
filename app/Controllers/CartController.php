@@ -13,13 +13,18 @@ class CartController extends BaseController
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('/login')->with('error', 'Vous devez être connecté pour voir votre panier.');
         }
-
+    
         $clientId = session()->get('id');
         $cartModel = new CartModel();
         $productModel = new ProductModel();
-
+    
+        // Fetch the cart items for the logged-in user
         $cartItems = $cartModel->where('client_id', $clientId)->findAll();
-
+    
+        // Calculate the number of items in the cart (for the navbar)
+        $itemCount = count($cartItems);  // This will give the total number of cart items
+    
+        // Prepare product data and calculate the total price
         $products = [];
         $totalPrice = 0;
         foreach ($cartItems as $item) {
@@ -28,18 +33,20 @@ class CartController extends BaseController
                 $adjustedPrice = $product['price'] * $item['quantity'];
                 $product['quantity'] = $item['quantity'];
                 $product['price'] = $adjustedPrice;
-
+    
                 $totalPrice += $adjustedPrice;
                 $products[] = $product;
             }
         }
-
+    
+        // Pass the cart item count, products, and total price to the view
         return $this->render('cart/index', [
             'products' => $products,
             'totalPrice' => $totalPrice,
+            'itemCount' => $itemCount,  // Make sure to pass itemCount to the view
         ]);
     }
-
+    
     public function add($productId)
     {
         if (!session()->get('isLoggedIn')) {

@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 
-<!-- Display Flash Message for Successful Order Validation -->
+
 <?php if (session()->getFlashdata('success')): ?>
     <div class="alert alert-success text-center" style="margin-bottom: 20px; background-color: #ABDACA; color: white; border-radius: 5px;">
         <?= session()->getFlashdata('success') ?>

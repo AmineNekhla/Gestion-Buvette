@@ -86,7 +86,7 @@ class OrderController extends BaseController
         $order['product_names'] = empty($productNames) ? 'No products found' : implode(', ', $productNames);
     }
 
-    return view('orders/manage', ['orders' => $orders]);
+    return $this->render('orders/manage', ['orders' => $orders]);
 }
 
     public function downloadReceipt($orderId)

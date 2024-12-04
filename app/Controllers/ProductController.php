@@ -13,21 +13,23 @@ class ProductController extends BaseController
     }
 
 
-    public function index()
-{
-    $productModel = new \App\Models\ProductModel();
-    $products = $productModel->findAll();
 
-    // Explicitly pass itemCount to the view
-    return view('products/index', [
-        'products' => $products,
-        'itemCount' => $this->viewData['itemCount'] ?? 0,
-    ]);
-}
+    public function index()
+    {
+        $productModel = new ProductModel();
+        $products = $productModel->findAll();
+
+        // The itemCount will automatically be passed to the view
+        return $this->render('products/index', [
+            'products' => $products,
+        ]);
+    }
+
 
 
     public function create(){
-        return view('products/create');
+        return $this->render('products/create');
+        
     }
 
     public function store(){
@@ -63,7 +65,7 @@ class ProductController extends BaseController
     public function edit($id){
         $model = new ProductModel();
         $data['product'] = $model->find($id);
-        return view('products/edit', $data);
+        return $this->render('products/edit', $data);
     }
 
     public function update($id){

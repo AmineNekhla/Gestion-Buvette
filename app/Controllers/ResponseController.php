@@ -18,9 +18,9 @@ class ResponseController extends BaseController
     
         $responseModel = new ResponseModel();
         $responses = $responseModel->getResponsesWithProductName($currentUserId);
-    
-        return view('responses/index', ['responses' => $responses]);
+
+        // Automatically passes 'itemCount' via BaseController
+        return $this->render('responses/index', ['responses' => $responses]);
     }
-    
     
 }

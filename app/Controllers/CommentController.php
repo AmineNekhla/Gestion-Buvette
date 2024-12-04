@@ -5,11 +5,13 @@ use App\Models\CommentModel;
 
 class CommentController extends BaseController
 {
-    public function index()
+ public function index()
     {
         $model = new CommentModel();
         $data['comments'] = $model->getCommentsWithUsers();
-        return view('comments/index', $data);
+
+     
+        return $this->render('comments/index', $data);
     }
 
     public function store()
