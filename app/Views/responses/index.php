@@ -72,6 +72,12 @@ table tbody tr:hover {
     background-color: #0056b3;
 }
 
+/* Disabled button styling */
+.btn-disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
     table {
@@ -105,21 +111,29 @@ table tbody tr:hover {
                 <td><?= $response['response'] ?></td>
                 <td><?= $response['created_at'] ?></td>
                 <td>
-                    <a href="<?= base_url('order/downloadReceipt/' . $response['validation_id']) ?>" class="btn btn-primary">
-                        Télécharger Reçu
-                    </a>
+                    <!-- Check for "Commande Validée" status directly -->
+                    <?php if (stripos($response['response'], 'Commande Validée') !== false): ?>
+                        <!-- Display the "Télécharger Reçu" button if validated -->
+                        <a href="<?= base_url('order/downloadReceipt/' . $response['validation_id']) ?>" class="btn btn-primary">
+                            Télécharger Reçu
+                        </a>
+                    <?php else: ?>
+                        <!-- Display a disabled button if not validated -->
+                        <span class="btn btn-disabled">
+                            Non validée
+                        </span>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
     <?php else: ?>
         <tr>
-            <td colspan="5">No responses found</td>
+            <td colspan="5">Aucune réponse trouvée</td>
         </tr>
     <?php endif; ?>
 </tbody>
-
     </table>
 </body>
 </html>
 
-<?= $this->endsection() ?> 
+<?= $this->endsection() ?>

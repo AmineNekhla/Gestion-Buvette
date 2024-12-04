@@ -23,7 +23,7 @@ class UpdateRatingColumn extends Migration
             'rating' => [
                 'type' => 'INT',
                 'constraint' => 5,
-                'null' => false, // Revert back to NOT NULL
+                'null' => false, 
             ],
         ]);
     }

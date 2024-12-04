@@ -1,6 +1,14 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
+
+<!-- Display Flash Message for Successful Order Validation -->
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success text-center" style="margin-bottom: 20px; background-color: #ABDACA; color: white; border-radius: 5px;">
+        <?= session()->getFlashdata('success') ?>
+    </div>
+<?php endif; ?>
+
 <h1 class="text-center mb-4" style="color: #2C3E50; font-family: 'Arial', sans-serif;">Mon Panier</h1>
 
 <?php if (!empty($products) && is_array($products)): ?>
